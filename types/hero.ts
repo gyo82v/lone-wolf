@@ -7,7 +7,7 @@ export type Hero = {
   oggettiSpeciali: string[],
   zaino: {
     oggetti: string[];
-    pasti: string[];
+    pasti: number;
   };
   bonus: {
     name: string;
