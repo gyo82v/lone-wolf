@@ -8,7 +8,10 @@ type Props = {
 export default function SetupSection({setHero}:Props){
     return(
         <section>
-            <p>set up here</p>
+            <form>
+                <p>form here</p>
+            </form>
+            <button>button here</button>
         </section>
     )
 }

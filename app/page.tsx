@@ -6,6 +6,11 @@ import GameSection from "@/components/GameSection";
 import CombatSection from "@/components/CombatSection";
 import type { Hero } from "@/types/hero";
 
+type HeroStringArrayKey =
+  | "armamento"
+  | "artiRamas"
+  | "oggettiSpeciali";
+
 export default function Home() {
   const [hero, setHero] = useState<Hero>({
     resistenza: 0,
@@ -25,12 +30,22 @@ export default function Home() {
       [key]: [...(prev[key as keyof Hero] as string[]), item],
     }));
   };
-  const handleRemoveItemFromArray = (item:string, key:string) => {
+  const handleRemoveItemFromArray = (item:string, key:HeroStringArrayKey) => {
     setHero(prev => ({
       ...prev,
       [key]: (prev[key as keyof Hero] as string[]).filter(i => i !== item)
     }))
   }
+  const handleAddItemToBonusArray = (name: string,value: number) => {
+    setHero((prev) => ({
+      ...prev,
+      bonus: [...prev.bonus, {name, value}]
+    }));
+  };
+  const handleRemoveItemFromBonusArray = (name: string) => {
+    setHero((prev) => ({...prev, bonus: prev.bonus.filter((bonus) => bonus.name !== name),
+    }));
+  };
 
   return (
     <main>
