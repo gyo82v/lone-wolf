@@ -17,7 +17,7 @@ export default function Home() {
     combattivita: 0,
     armamento: [],
     artiRamas: [],
-    zaino: {oggetti: [], pasti: 0},
+    zaino: {oggetti: ["spada", "coltello", "panino"], pasti: 0},
     borsa: 0,
     oggettiSpeciali: [],
     bonus: []
@@ -51,7 +51,7 @@ export default function Home() {
     <main>
       <h1>Lone Wolf</h1>
       <div>
-        <SetupSection setHero={setHero} />
+        <SetupSection setHero={setHero} hero={hero} />
       </div>
       <div>
         <GameSection />
