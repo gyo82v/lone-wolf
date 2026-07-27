@@ -3,6 +3,8 @@ import type { Hero } from "@/types/hero";
 import { baseButtonStyle } from "@/styles/button";
 import { inputBasestyle } from "@/styles/input";
 import { SmallDivider} from "./ui/dividers";
+import List from "@/lib/List"
+import ListBonus from "@/lib/ListBonus";
 
 type Props = {
   setHero: Dispatch<SetStateAction<Hero>>;
@@ -29,6 +31,12 @@ export default function SetupSection({setHero, hero}:Props){
                   <div className="flex flex-col gap-3">
                     <p className="font-bold">Add Corone in Borsa</p>
                     <button className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
+                  </div>
+                  <SmallDivider />
+                  <div className="flex flex-col gap-3">
+                    <label htmlFor="armamenti" className="font-bold">Add Armamenti</label>
+                    <input className={`${inputBasestyle}`} type="text" id="ermamenti" />
+                    <button className={`${baseButtonStyle} w-1/2 uppercase`}>add</button>
                   </div>
                   <SmallDivider />
                   <div className="flex flex-col gap-4">
@@ -80,24 +88,18 @@ export default function SetupSection({setHero, hero}:Props){
                   </div>
                 </div>
                 <div className="border-2 border-stone-500 rounded-lg p-4 w-full">
-                    <h3 className="font-bold text-lg">Lone Wolf</h3>
-                    <p>Resistenza: <span>{hero?.resistenza}</span></p>
-                    <p>Combattivita: <span>{hero?.combattivita}</span></p>
-                    <p>Borsa: <span>{hero?.borsa}</span></p>
-                    <div>oggetti zaino: 
-                        <span className="ml-2">
-                            {hero?.zaino?.oggetti.length > 0 ? 
-                             <ul>
-                              {hero.zaino.oggetti.map(o => { ( <li key={o}>{o}</li>)})}
-                              </ul>
-                             :
-                             "The Zaino is empty."}
-                        </span>
+                    <h3 className="font-bold text-xl mb-6">Lone Wolf</h3>
+                    <div className="flex flex-col gap-3">
+                      <p className="font-bold">Resistenza: <span className="font-light">{hero?.resistenza}</span></p>
+                      <p className="font-bold">Combattivita: <span className="font-light">{hero?.combattivita}</span></p>
+                      <p className="font-bold">Borsa: <span className="font-light">{hero?.borsa}</span></p>
+                      <p className="font-bold">Pasti: <span className="font-light">{hero?.zaino?.pasti}</span></p>
+                      <List title="Armamenti" array={hero?.armamento} />
+                      <List title="Oggetti zaino" array={hero?.zaino?.oggetti} />
+                      <List title="Oggetti speciali" array={hero?.oggettiSpeciali} />
+                      <List title="Arti ramas" array={hero?.artiRamas} />
+                      <ListBonus title="Bonus" array={hero?.bonus} />
                     </div>
-                    <p>Pasti: <span>{hero?.zaino?.pasti}</span></p>
-                    <p>Oggetti speciali: <span>speciali here</span></p>
-                    <p>Arti ramas: <span> arti ramas here</span></p>
-                    <p>Bonus: <span>bonus here</span></p>
                 </div>
             </div>
             <div>
