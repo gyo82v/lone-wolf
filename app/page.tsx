@@ -22,6 +22,9 @@ export default function Home() {
     oggettiSpeciali: [],
     bonus: []
   })
+  const [showSetup, setShowSetup] = useState(true)
+  const [showGame, setShowGame] = useState(false)
+  const [showCombat, setShowCombat] = useState(false)
 
   const handleHeroStat = (value:number, key:string) => setHero(p => ({...p, [key]: value}))
   const handleAddItemToArray = (item: string, key: string) => {
@@ -78,8 +81,8 @@ export default function Home() {
 
   return (
     <main>
-      <h1>Lone Wolf</h1>
-      <div>
+      <h1 className="font-bold text-3xl text-center my-4 text-stone-600 underline">Lone Wolf</h1>
+      {showSetup && 
         <SetupSection 
           hero={hero}
           handleStats={handleHeroStat}
@@ -87,14 +90,12 @@ export default function Home() {
           addItemToZaino={addZainoOggetto}
           handlePasti={updatePasti}
           addBonus={handleAddItemToBonusArray}
+          setShowGame={setShowGame}
+          setShowSetup={setShowSetup}
         />
-      </div>
-      <div>
-        <GameSection />
-      </div>
-      <div>
-        <CombatSection />
-      </div>
+      }
+      {showGame && <GameSection />}
+      {showCombat && <CombatSection /> }
     </main>
   );
 }

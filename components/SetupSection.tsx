@@ -5,6 +5,7 @@ import { SmallDivider} from "./ui/dividers";
 import List from "@/components/ui/List"
 import ListBonus from "@/components/ui/ListBonus";
 import { randomNumber } from "@/lib/randomNumberGenerator";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   hero: Hero
@@ -13,9 +14,11 @@ type Props = {
   addItemToZaino?: (item:string) => void
   handlePasti?: (amount:1|-1) => void
   addBonus?: (name:string, value:number) => void
+  setShowGame:  Dispatch<SetStateAction<boolean>>
+  setShowSetup:  Dispatch<SetStateAction<boolean>>
 };
 
-export default function SetupSection({hero, handleStats, addItemToArray, addItemToZaino, handlePasti, addBonus}:Props){
+export default function SetupSection({hero, handleStats, addItemToArray, addItemToZaino, handlePasti, addBonus, setShowGame, setShowSetup}:Props){
 
     const handleResistenza = (formData: FormData) => {
       if(!handleStats) return
@@ -76,9 +79,17 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
       if(!addBonus) return
       const name = formData.get("name")
       const value = formData.get("value")
+      const numberValue = Number(value)
       if(typeof name !== "string" || name.trim() === "") return
-      if(typeof value !== "number" || !value) return
-      addBonus(name, value)
+      if(typeof numberValue !== "number" || !value) return
+      addBonus(name, numberValue)
+    }
+
+    const handleAddArtiRamas = (formData:FormData) => {
+      if(!addItemToArray) return
+      const arte = formData.get("arte")
+      if(typeof arte !== "string" || arte.trim() === "") return
+      addItemToArray(arte, "artiRamas")
     }
 
     const handleAddPasti = () => {
@@ -86,9 +97,14 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
       handlePasti(1)
     }
 
+    const handleStart = () => {
+      setShowGame(true)
+      setShowSetup(false)
+    }
+
     return(
         <section className="flex flex-col items-center">
-            <h2 className="mb-10">Set up</h2>
+            <h2 className="mb-10 text-xl font-bold">Set up</h2>
             <div className="flex gap-10 w-8/12">
                 <div className="flex flex-col gap-5 border-2 border-stone-500 rounded-lg p-8 w-full">
                   <form className="flex flex-col gap-3" action={handleResistenza}>
@@ -144,24 +160,23 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
                     </div>
                     <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
                   </form>
-
                   <SmallDivider />
-                  <div className="flex flex-col gap-4">
+                  <form className="flex flex-col gap-3" action={handleAddArtiRamas}>
                     <p className="font-bold">Select arti ramas</p>
-                    <select>
-                        <option value="Guarigione">Guarigione</option>
-                        <option value="Mimetismo">Mimetismo</option>
-                        <option value="Orientamento">Orientamento</option>
-                        <option value="Psicoschermo">Psicoschermo</option>
-                        <option value="Psicolaser">Psicolaser</option>
-                        <option value="Scherma">Scherma</option>
-                        <option value="Sesto-senso">Sesto senso</option>
-                        <option value="Caccia">Caccia</option>
-                        <option value="Affinita-animale">Affinita animale</option>
-                        <option value="Telecinesi">Telecinesi</option>
+                    <select name="arte">
+                      <option value="Guarigione">Guarigione</option>
+                      <option value="Mimetismo">Mimetismo</option>
+                      <option value="Orientamento">Orientamento</option>
+                      <option value="Psicoschermo">Psicoschermo</option>
+                      <option value="Psicolaser">Psicolaser</option>
+                      <option value="Scherma">Scherma</option>
+                      <option value="Sesto-senso">Sesto senso</option>
+                      <option value="Caccia">Caccia</option>
+                      <option value="Affinita-animale">Affinita animale</option>
+                      <option value="Telecinesi">Telecinesi</option>
                     </select>
-                    <button className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
-                  </div>
+                    <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
+                  </form>
                 </div>
                 <div className="border-2 border-stone-500 rounded-lg p-4 w-full">
                     <h3 className="font-bold text-xl mb-6">Lone Wolf</h3>
@@ -178,9 +193,13 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
                     </div>
                 </div>
             </div>
-            <div>
-                <button>Start game</button>
-                <button>Load game</button>
+            <div className="flex items-center justify-center gap-5 my-10 w-full">
+                <button className={`${baseButtonStyle} w-1/4`} onClick={handleStart}>
+                  Start game
+                </button>
+                <button className={`${baseButtonStyle} w-1/4`}>
+                  Load game
+                </button>
             </div>
         </section>
     )
