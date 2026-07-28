@@ -17,7 +17,7 @@ export default function Home() {
     combattivita: 0,
     armamento: [],
     artiRamas: [],
-    zaino: {oggetti: ["spada", "coltello", "panino"], pasti: 0},
+    zaino: {oggetti: [], pasti: 0},
     borsa: 0,
     oggettiSpeciali: [],
     bonus: []
@@ -46,12 +46,48 @@ export default function Home() {
     setHero((prev) => ({...prev, bonus: prev.bonus.filter((bonus) => bonus.name !== name),
     }));
   };
+ const addZainoOggetto = (item: string) => {
+  setHero((prev) => ({
+    ...prev,
+    zaino: {
+      ...prev.zaino,
+      oggetti: [...prev.zaino.oggetti, item],
+    },
+  }));
+};
+
+  const removeZainoOggetto = (item: string) => {
+  setHero((prev) => ({
+    ...prev,
+    zaino: {
+      ...prev.zaino,
+      oggetti: prev.zaino.oggetti.filter((i) => i !== item),
+    },
+  }));
+};
+
+  const updatePasti = (amount: 1 | -1) => {
+  setHero((prev) => ({
+    ...prev,
+    zaino: {
+      ...prev.zaino,
+      pasti: Math.max(0, prev.zaino.pasti + amount),
+    },
+  }));
+};
 
   return (
     <main>
       <h1>Lone Wolf</h1>
       <div>
-        <SetupSection setHero={setHero} hero={hero} />
+        <SetupSection 
+          hero={hero}
+          handleStats={handleHeroStat}
+          addItemToArray={handleAddItemToArray}
+          addItemToZaino={addZainoOggetto}
+          handlePasti={updatePasti}
+          addBonus={handleAddItemToBonusArray}
+        />
       </div>
       <div>
         <GameSection />

@@ -1,74 +1,150 @@
-import { Dispatch, SetStateAction } from "react";
 import type { Hero } from "@/types/hero";
 import { baseButtonStyle } from "@/styles/button";
 import { inputBasestyle } from "@/styles/input";
 import { SmallDivider} from "./ui/dividers";
-import List from "@/lib/List"
-import ListBonus from "@/lib/ListBonus";
+import List from "@/components/ui/List"
+import ListBonus from "@/components/ui/ListBonus";
+import { randomNumber } from "@/lib/randomNumberGenerator";
 
 type Props = {
-  setHero: Dispatch<SetStateAction<Hero>>;
   hero: Hero
+  handleStats?: (value:number, key:string) => void
+  addItemToArray?: (item:string, key:string) => void
+  addItemToZaino?: (item:string) => void
+  handlePasti?: (amount:1|-1) => void
+  addBonus?: (name:string, value:number) => void
 };
 
-export default function SetupSection({setHero, hero}:Props){
-    console.log(hero?.zaino?.oggetti)
+export default function SetupSection({hero, handleStats, addItemToArray, addItemToZaino, handlePasti, addBonus}:Props){
+
+    const handleResistenza = (formData: FormData) => {
+      if(!handleStats) return
+      const prevResistenza = Number(formData.get("resistenza"));
+      const resistenza = randomNumber() + 20
+      if(prevResistenza){
+        handleStats(prevResistenza, "resistenza")
+      }else{
+        handleStats(resistenza, "resistenza")
+      }
+    }
+
+    const handleCombattivita = (formData: FormData) => {
+      if(!handleStats) return
+      const prevCombattivita = Number(formData.get("combattivita"))
+      const combattivita = randomNumber() + 10
+      if(prevCombattivita){
+        handleStats(prevCombattivita, "combattivita")
+      }else{
+        handleStats(combattivita, "combattivita")
+      }
+    }
+
+    const handleCorone = (formData: FormData) => {
+      if(!handleStats) return
+      const prevCorone = Number(formData.get("corone"))
+      const corone = randomNumber() + 10
+      if(prevCorone){
+        const totalCorone = prevCorone + corone
+        handleStats(totalCorone, "borsa")
+      }else{
+        handleStats(corone, "borsa")
+      }
+    }
+
+    const handleArmamento = (formData: FormData) => {
+      if(!addItemToArray) return
+      const armamento = formData.get("armamento")
+      if (typeof armamento !== "string" || armamento.trim() === "") return;
+      addItemToArray(armamento, "armamento")
+    }
+
+    const handleAddItemToZaino = (formData: FormData) => {
+      if(!addItemToZaino) return
+      const item = formData.get("item")
+      if(typeof item !== "string" || item.trim() === "") return
+      addItemToZaino(item)
+    }
+
+    const handleAddSpecialOggetti = (formData:FormData) => {
+      if(!addItemToArray) return
+      const specialitem = formData.get("special")
+      if(typeof specialitem !== "string" || specialitem.trim() === "") return
+      addItemToArray(specialitem, "oggettiSpeciali")
+    }
+
+    const handleAddBonus = (formData: FormData) => {
+      if(!addBonus) return
+      const name = formData.get("name")
+      const value = formData.get("value")
+      if(typeof name !== "string" || name.trim() === "") return
+      if(typeof value !== "number" || !value) return
+      addBonus(name, value)
+    }
+
+    const handleAddPasti = () => {
+      if(!handlePasti) return
+      handlePasti(1)
+    }
+
     return(
         <section className="flex flex-col items-center">
             <h2 className="mb-10">Set up</h2>
             <div className="flex gap-10 w-8/12">
                 <div className="flex flex-col gap-5 border-2 border-stone-500 rounded-lg p-8 w-full">
-                  <div className="flex flex-col gap-3">
+                  <form className="flex flex-col gap-3" action={handleResistenza}>
                     <p className="font-bold ">Add Resistenza:</p>
-                    <button className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
-                  </div>
+                    <input className={`${inputBasestyle}`} type="number" placeholder="optionally use old value" name="resistenza" />
+                    <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`}>Save</button>
+                  </form>
                   <SmallDivider />
-                  <div className="flex flex-col gap-3">
+                  <form className="flex flex-col gap-3" action={handleCombattivita}>
                     <p className="font-bold ">Add Combattivita</p>
-                    <button className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
-                  </div>
+                    <input className={`${inputBasestyle}`} type="number" placeholder="optionally use old value" name="combattivita" />
+                    <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`}>Save</button>
+                  </form>
                   <SmallDivider />
-                  <div className="flex flex-col gap-3">
-                    <p className="font-bold">Add Corone in Borsa</p>
-                    <button className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
-                  </div>
+                  <form className="flex flex-col gap-3" action={handleCorone}>
+                    <p className="font-bold">Add corone in borsa</p>
+                    <input className={`${inputBasestyle}`} type="number" name="corone" placeholder="optionally add corone"/>
+                    <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`}>Save</button>
+                  </form>
                   <SmallDivider />
-                  <div className="flex flex-col gap-3">
-                    <label htmlFor="armamenti" className="font-bold">Add Armamenti</label>
-                    <input className={`${inputBasestyle}`} type="text" id="ermamenti" />
-                    <button className={`${baseButtonStyle} w-1/2 uppercase`}>add</button>
-                  </div>
+                  <form className="flex flex-col gap-3" action={handleArmamento}>
+                    <p className="font-bold">Add armamento</p>
+                    <input className={`${inputBasestyle}`} type="text" name="armamento"/>
+                    <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
+                  </form>
                   <SmallDivider />
-                  <div className="flex flex-col gap-4">
-                    <label htmlFor="oggettin" className="font-bold ">Add oggetti in zaino</label>
-                    <input id="oggetti" type="text" className={`${inputBasestyle}`} />
-                    <button className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
-                  </div>
+                  <form className="flex flex-col gap-3" action={handleAddItemToZaino}>
+                    <p className="font-bold">Add oggetti in Zaino</p>
+                    <input className={`${inputBasestyle}`} type="text" name="item" />
+                    <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
+                  </form>
                   <SmallDivider />
-                  <div className="flex flex-col gap-4">
-                    <label htmlFor="pasti" className="font-bold ">Add pasti in zaino</label>
-                    <input id="pasti" type="number" className={`${inputBasestyle}`} />
-                    <button className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
-                  </div>
+                  <form className="flex flex-col gap-3" action={handleAddPasti}>
+                    <p className="font-bold">Add pasti in Zaino</p>
+                    <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
+                  </form>
                   <SmallDivider />
-                  <div className="flex flex-col gap-4">
-                    <label htmlFor="speciali" className="font-bold ">Add oggetti speciali</label>
-                    <input id="speciali" type="text" className={`${inputBasestyle}`} />
-                    <button className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
-                  </div>
+                  <form className="flex flex-col gap-3" action={handleAddSpecialOggetti}>
+                    <p className="font-bold">Add oggetti speciali</p>
+                    <input className={`${inputBasestyle}`} type="text" name="special" />
+                    <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`} >Add</button>
+                  </form>
                   <SmallDivider />
-                  <div className=" flex flex-col gap-4">
-                    <p className="font-bold ">Add bonus</p>
+                  <form className="flex flex-col gap-3" action={handleAddBonus}>
+                    <p className="font-bold">Add bonus</p>
                     <div>
-                        <label className="uppercase" htmlFor="name">Name</label>
-                        <input type="text" id="name" className={`${inputBasestyle}`} />
+                      <label htmlFor="name" className="uppercase">Name</label>
+                      <input className={`${inputBasestyle}`} type="text" name="name" id="name" />
                     </div>
                     <div>
-                        <label className="uppercase" htmlFor="value">Value</label>
-                        <input type="number" id="value" className={`${inputBasestyle}`} />
+                      <label htmlFor="value" className="uppercase">Value</label>
+                      <input className={`${inputBasestyle}`} type="number" name="value" id="value" />
                     </div>
-                    <button className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
-                  </div>
+                    <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
+                  </form>
+
                   <SmallDivider />
                   <div className="flex flex-col gap-4">
                     <p className="font-bold">Select arti ramas</p>
