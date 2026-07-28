@@ -94,7 +94,11 @@ export default function Home() {
           setShowSetup={setShowSetup}
         />
       }
-      {showGame && <GameSection />}
+      {showGame && 
+        <GameSection
+          hero={hero}
+        />
+      }
       {showCombat && <CombatSection /> }
     </main>
   );
