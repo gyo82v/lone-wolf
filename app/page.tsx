@@ -25,6 +25,9 @@ export default function Home() {
   const [showSetup, setShowSetup] = useState(true)
   const [showGame, setShowGame] = useState(false)
   const [showCombat, setShowCombat] = useState(false)
+  const [health, setHealth] = useState(0)
+  const [strenght, setStrenght] = useState(0)
+
 
   const handleHeroStat = (value:number, key:string) => setHero(p => ({...p, [key]: value}))
   const handleAddItemToArray = (item: string, key: string) => {
@@ -92,11 +95,17 @@ export default function Home() {
           addBonus={handleAddItemToBonusArray}
           setShowGame={setShowGame}
           setShowSetup={setShowSetup}
+          setHealth={setHealth}
+          setStrenght={setStrenght}
         />
       }
       {showGame && 
         <GameSection
           hero={hero}
+          health={health}
+          strenght={strenght}
+          setHealth={setHealth}
+          setStrenght={setStrenght}
         />
       }
       {showCombat && <CombatSection /> }

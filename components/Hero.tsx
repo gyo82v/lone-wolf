@@ -81,7 +81,7 @@ export default function HeroSection({hero}:Props){
                         <p className="font-semibold text-lg">Oggetti zaino</p>
                     </div>
                     {hero.zaino.oggetti.length > 0 ?
-                        <ul className="flex items-center gap-2">
+                        <ul className="list-decimal ml-4">
                           {hero.zaino.oggetti.map(o => <li key={o}>{o}</li>)}
                         </ul> :
                         "The zaino is empty..."
