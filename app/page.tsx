@@ -11,6 +11,11 @@ type HeroStringArrayKey =
   | "artiRamas"
   | "oggettiSpeciali";
 
+type HeroNumberKey =
+  | "resistenza"
+  | "combattivita"
+  | "borsa";
+
 export default function Home() {
   const [hero, setHero] = useState<Hero>({
     resistenza: 0,
@@ -27,9 +32,18 @@ export default function Home() {
   const [showCombat, setShowCombat] = useState(false)
   const [health, setHealth] = useState(0)
   const [strenght, setStrenght] = useState(0)
+  const [enemyHealth, setEnemyHealth] = useState(0)
+  const [enemyStrenght, setEnemyStrenght] = useState(0)
+  const [combatStrenght, setCombatStrenght] = useState(0)
 
 
+  const addHealth = (value:number) => setHealth(h => h + value)
+  const removeHealth = (value:number) => setHealth(h => h - value)
+  const addStrenght = (value:number) => setStrenght(s => s + value)
+  const removeStrenght = (value:number) => setStrenght(s => s - value)
   const handleHeroStat = (value:number, key:string) => setHero(p => ({...p, [key]: value}))
+  const handleAddHeroStats = (value:number, key:HeroNumberKey) => setHero(p => ({...p, [key]: p[key] + value}))
+  const handleRemoveHeroStats = (value:number, key:HeroNumberKey) => setHero(p => ({...p, [key]: p[key] - value}))
   const handleAddItemToArray = (item: string, key: string) => {
     setHero((prev) => ({
       ...prev,
@@ -72,12 +86,22 @@ export default function Home() {
   }));
 };
 
-  const updatePasti = (amount: 1 | -1) => {
+  const updatePasti = (amount: number) => {
   setHero((prev) => ({
     ...prev,
     zaino: {
       ...prev.zaino,
       pasti: Math.max(0, prev.zaino.pasti + amount),
+    },
+  }));
+};
+
+const removePasti = (amount: number) => {
+  setHero((prev) => ({
+    ...prev,
+    zaino: {
+      ...prev.zaino,
+      pasti: Math.max(0, prev.zaino.pasti - amount),
     },
   }));
 };
@@ -104,11 +128,35 @@ export default function Home() {
           hero={hero}
           health={health}
           strenght={strenght}
-          setHealth={setHealth}
-          setStrenght={setStrenght}
+          addItem={handleAddItemToArray}
+          removeItem={handleRemoveItemFromArray}
+          addZaino={addZainoOggetto}
+          removeZaino={removeZainoOggetto}
+          addBonus={handleAddItemToBonusArray}
+          removeBonus={handleRemoveItemFromBonusArray}
+          addStats={handleAddHeroStats}
+          removeStats={handleRemoveHeroStats}
+          updatePasti={updatePasti}
+          removePasti={removePasti}
+          addHealth={addHealth}
+          removeHealth={removeHealth}
+          addStrenght={addStrenght}
+          removeStrenght={removeStrenght}
+          setShowGame={setShowGame}
+          setShowCombat={setShowCombat}
+          setEnemyStrenght={setEnemyStrenght}
+          setEnemyHealth={setEnemyHealth}
+          setCombatStrenght={setCombatStrenght}
         />
       }
-      {showCombat && <CombatSection /> }
+      {showCombat && 
+        <CombatSection
+         enemyHealth={enemyHealth}
+         enemyStrenght={enemyStrenght}
+         health={health}
+         strenght={combatStrenght}
+        />
+     }
     </main>
   );
 }

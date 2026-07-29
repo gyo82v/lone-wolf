@@ -2,8 +2,8 @@ import { baseButtonStyle } from "@/styles/button"
 import { inputBasestyle } from "@/styles/input"
 
 type Props = {
-    addAction?: () => void
-    removeAction?: () => void
+    addAction?: (formData:FormData) => void
+    removeAction?: (formData:FormData) => void
 }
 
 export default function BonusSection({addAction, removeAction}:Props){

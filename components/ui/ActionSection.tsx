@@ -3,8 +3,8 @@ import { inputBasestyle } from "@/styles/input"
 
 type Props = {
     title: string
-    addAction?: () => void
-    removeAction?: () => void
+    addAction?: (formData:FormData) => void
+    removeAction?: (formData:FormData) => void
     type?: string
 }
 
