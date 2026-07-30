@@ -49,7 +49,6 @@ type Props = {
     removeStrenght: (value:number) => void
     setShowGame: Dispatch<SetStateAction<boolean>>
     setShowCombat: Dispatch<SetStateAction<boolean>>
-    setEnemyStrenght: Dispatch<SetStateAction<number>>
     setEnemyHealth: Dispatch<SetStateAction<number>>
     setCombatStrenght: Dispatch<SetStateAction<number>>
 }
@@ -58,7 +57,7 @@ export default function GameSection({
   hero, health, strenght, addItem, removeItem, addZaino,
   removeZaino, addBonus, removeBonus, addStats, removeStats, updatePasti, removePasti,
   addHealth, removeHealth, addStrenght, removeStrenght, setShowGame, setShowCombat,
-  setEnemyStrenght, setEnemyHealth, setCombatStrenght
+  setEnemyHealth, setCombatStrenght
 }:Props){
 
   const handleHealth = (formData:FormData) => {
@@ -178,7 +177,6 @@ export default function GameSection({
     const numberEnemyHealth = Number(enemyHealth)
     if(typeof numberEnemyHealth !== "number" || typeof numberEnemyStrenght !== "number" || typeof numberLoneWolfStrenght !== "number")return
     setEnemyHealth(numberEnemyHealth)
-    setEnemyStrenght(numberEnemyStrenght)
     setCombatStrenght(numberLoneWolfStrenght)
     setShowGame(false)
     setShowCombat(true)
@@ -208,9 +206,8 @@ export default function GameSection({
                 <h2 className="font-semibold text-lg mb-2">Combat</h2>
                 <form className="flex flex-col gap-3" action={startCombat}>
                   <div className="flex gap-2">
-                    <input className={`${inputBasestyle}`} type="number" placeholder="lone wolf strenght" name="strenght" />
+                    <input className={`${inputBasestyle}`} type="number" placeholder="combat strenght" name="strenght" />
                     <input className={`${inputBasestyle}`} type="text" placeholder="enemy health" name="enemy-health" />
-                    <input className={`${inputBasestyle}`} type="number" placeholder="enemy strenght" name="enemy-strenght" />
                   </div>
                   <button type="submit" className={`${baseButtonStyle} uppercase`}>start combat</button>
                 </form>

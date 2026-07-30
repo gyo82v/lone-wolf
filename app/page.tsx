@@ -5,6 +5,7 @@ import SetupSection from "@/components/SetupSection";
 import GameSection from "@/components/GameSection";
 import CombatSection from "@/components/CombatSection";
 import type { Hero } from "@/types/hero";
+import { baseButtonStyle } from "@/styles/button";
 
 type HeroStringArrayKey =
   | "armamento"
@@ -33,8 +34,8 @@ export default function Home() {
   const [health, setHealth] = useState(0)
   const [strenght, setStrenght] = useState(0)
   const [enemyHealth, setEnemyHealth] = useState(0)
-  const [enemyStrenght, setEnemyStrenght] = useState(0)
   const [combatStrenght, setCombatStrenght] = useState(0)
+  const [gameOver, setGameOver] = useState(false)
 
 
   const addHealth = (value:number) => setHealth(h => h + value)
@@ -106,9 +107,37 @@ const removePasti = (amount: number) => {
   }));
 };
 
+const restartGame = () => {
+  setShowGame(false)
+  setShowCombat(false)
+  setShowSetup(true)
+  setHealth(0)
+  setStrenght(0)
+  setEnemyHealth(0)
+  setCombatStrenght(0)
+  setGameOver(false)
+  setHero({
+    resistenza: 0,
+    combattivita: 0,
+    armamento: [],
+    artiRamas: [],
+    zaino: {oggetti: [], pasti: 0},
+    borsa: 0,
+    oggettiSpeciali: [],
+    bonus: []
+  })
+}
+
   return (
     <main>
       <h1 className="font-bold text-3xl text-center my-4 text-stone-600 underline">Lone Wolf</h1>
+      {gameOver ?
+      <div>
+        <h2 className="text-2xl font-bold">Game over</h2>
+        <button onClick={restartGame} className={`${baseButtonStyle} uppercase`}>Restart</button>
+      </div> :
+      
+      <>
       {showSetup && 
         <SetupSection 
           hero={hero}
@@ -123,6 +152,7 @@ const removePasti = (amount: number) => {
           setStrenght={setStrenght}
         />
       }
+
       {showGame && 
         <GameSection
           hero={hero}
@@ -144,19 +174,25 @@ const removePasti = (amount: number) => {
           removeStrenght={removeStrenght}
           setShowGame={setShowGame}
           setShowCombat={setShowCombat}
-          setEnemyStrenght={setEnemyStrenght}
           setEnemyHealth={setEnemyHealth}
           setCombatStrenght={setCombatStrenght}
         />
       }
+
       {showCombat && 
         <CombatSection
          enemyHealth={enemyHealth}
-         enemyStrenght={enemyStrenght}
          health={health}
-         strenght={combatStrenght}
+         combatStrenght={combatStrenght}
+         setHealth={setHealth}
+         setEnemyHealth={setEnemyHealth}
+         setShowGame={setShowGame}
+         setShowCombat={setShowCombat}
+         setGameOver={setGameOver}
         />
-     }
+     }            
+      </>        
+      }
     </main>
   );
 }
