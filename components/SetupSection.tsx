@@ -18,9 +18,10 @@ type Props = {
   setShowSetup:  Dispatch<SetStateAction<boolean>>
   setHealth: Dispatch<SetStateAction<number>>
   setStrenght:  Dispatch<SetStateAction<number>>
+  setGameStarted: Dispatch<SetStateAction<boolean>>
 };
 
-export default function SetupSection({hero, handleStats, addItemToArray, addItemToZaino, handlePasti, addBonus, setShowGame, setShowSetup, setHealth, setStrenght}:Props){
+export default function SetupSection({hero, handleStats, addItemToArray, addItemToZaino, handlePasti, addBonus, setShowGame, setShowSetup, setHealth, setStrenght, setGameStarted}:Props){
 
     const handleResistenza = (formData: FormData) => {
       if(!handleStats) return
@@ -102,6 +103,7 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
     const handleStart = () => {
       setHealth(hero.resistenza)
       setStrenght(hero.combattivita)
+      setGameStarted(true)
       setShowGame(true)
       setShowSetup(false)
     }

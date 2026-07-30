@@ -13,10 +13,9 @@ type Props = {
     setEnemyHealth: Dispatch<SetStateAction<number>>
     setShowGame: Dispatch<SetStateAction<boolean>>
     setShowCombat: Dispatch<SetStateAction<boolean>>
-    setGameOver: Dispatch<SetStateAction<boolean>>
 }
 
-export default function CombatSection({health, enemyHealth, combatStrenght, setHealth, setEnemyHealth, setShowGame, setShowCombat, setGameOver}:Props){
+export default function CombatSection({health, enemyHealth, combatStrenght, setHealth, setEnemyHealth, setShowGame, setShowCombat}:Props){
 
     const [text, setText] = useState({wolf: 0, enemy:0, randomNumber:0})
     const [battleWon, setBattleWon] = useState(false)
@@ -30,7 +29,6 @@ export default function CombatSection({health, enemyHealth, combatStrenght, setH
       setText(t => ({...t, randomNumber: result.randomInt}))
       setHealth(result.lupoSolitarioHP)
       setEnemyHealth(result.enemyHP)
-      if(health <= 0) setGameOver(true)
       if(enemyHealth <= 0) setBattleWon(true)
 
       console.log("result: ", result)

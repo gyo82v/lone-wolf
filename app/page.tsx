@@ -35,8 +35,8 @@ export default function Home() {
   const [strenght, setStrenght] = useState(0)
   const [enemyHealth, setEnemyHealth] = useState(0)
   const [combatStrenght, setCombatStrenght] = useState(0)
-  const [gameOver, setGameOver] = useState(false)
-
+  const [gameStarted, setGameStarted] = useState(false)
+  const gameOver = gameStarted && health <= 0;
 
   const addHealth = (value:number) => setHealth(h => h + value)
   const removeHealth = (value:number) => setHealth(h => h - value)
@@ -115,7 +115,7 @@ const restartGame = () => {
   setStrenght(0)
   setEnemyHealth(0)
   setCombatStrenght(0)
-  setGameOver(false)
+  setGameStarted(false)
   setHero({
     resistenza: 0,
     combattivita: 0,
@@ -132,8 +132,8 @@ const restartGame = () => {
     <main>
       <h1 className="font-bold text-3xl text-center my-4 text-stone-600 underline">Lone Wolf</h1>
       {gameOver ?
-      <div>
-        <h2 className="text-2xl font-bold">Game over</h2>
+      <div className="flex flex-col mx-auto w-4/12 items-center gap-6 mt-20">
+        <h2 className="text-6xl font-bold">Game over</h2>
         <button onClick={restartGame} className={`${baseButtonStyle} uppercase`}>Restart</button>
       </div> :
       
@@ -150,6 +150,7 @@ const restartGame = () => {
           setShowSetup={setShowSetup}
           setHealth={setHealth}
           setStrenght={setStrenght}
+          setGameStarted={setGameStarted}
         />
       }
 
@@ -188,7 +189,6 @@ const restartGame = () => {
          setEnemyHealth={setEnemyHealth}
          setShowGame={setShowGame}
          setShowCombat={setShowCombat}
-         setGameOver={setGameOver}
         />
      }            
       </>        

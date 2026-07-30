@@ -4,19 +4,8 @@ import { baseButtonStyle } from "@/styles/button";
 import { inputBasestyle } from "@/styles/input";
 import ActionSection from "./ui/ActionSection";
 import BonusSection from "./ui/BonusSection";
-import {
-  FaHeart,
-  FaShieldHalved,
-  FaCirclePlus,
-} from "react-icons/fa6";
-import {
-  GiBackpack,
-  GiSwapBag,
-  GiMeal,
-  GiOpenBook,
-  GiEmerald,
-  GiCrossedSwords,
-} from "react-icons/gi";
+import {FaHeart} from "react-icons/fa6";
+import {GiCrossedSwords} from "react-icons/gi";
 import HeroSection from "./Hero";
 
 type HeroStringArrayKey =
@@ -51,6 +40,7 @@ type Props = {
     setShowCombat: Dispatch<SetStateAction<boolean>>
     setEnemyHealth: Dispatch<SetStateAction<number>>
     setCombatStrenght: Dispatch<SetStateAction<number>>
+
 }
 
 export default function GameSection({
