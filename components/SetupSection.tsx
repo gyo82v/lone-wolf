@@ -6,6 +6,7 @@ import List from "@/components/ui/List"
 import ListBonus from "@/components/ui/ListBonus";
 import { randomNumber } from "@/lib/randomNumberGenerator";
 import { Dispatch, SetStateAction } from "react";
+import { loadGame } from "@/firebase/loneWolf";
 
 type Props = {
   hero: Hero
@@ -19,9 +20,11 @@ type Props = {
   setHealth: Dispatch<SetStateAction<number>>
   setStrenght:  Dispatch<SetStateAction<number>>
   setGameStarted: Dispatch<SetStateAction<boolean>>
+  setHero: Dispatch<SetStateAction<Hero>>
+  setChapter: Dispatch<SetStateAction<number>>
 };
 
-export default function SetupSection({hero, handleStats, addItemToArray, addItemToZaino, handlePasti, addBonus, setShowGame, setShowSetup, setHealth, setStrenght, setGameStarted}:Props){
+export default function SetupSection({hero, handleStats, addItemToArray, addItemToZaino, handlePasti, addBonus, setShowGame, setShowSetup, setHealth, setStrenght, setGameStarted, setHero, setChapter}:Props){
 
     const handleResistenza = (formData: FormData) => {
       if(!handleStats) return
@@ -103,6 +106,20 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
     const handleStart = () => {
       setHealth(hero.resistenza)
       setStrenght(hero.combattivita)
+      setGameStarted(true)
+      setShowGame(true)
+      setShowSetup(false)
+      setChapter(0)
+    }
+
+    const handleLoadGame = async () => {
+      const data = await loadGame()
+      if(!data){
+        console.log("no save data found.")
+        return
+      }
+      setHero(data.hero)
+      setChapter(data.chapter)
       setGameStarted(true)
       setShowGame(true)
       setShowSetup(false)
@@ -203,7 +220,7 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
                 <button className={`${baseButtonStyle} w-1/4`} onClick={handleStart}>
                   Start game
                 </button>
-                <button className={`${baseButtonStyle} w-1/4`}>
+                <button className={`${baseButtonStyle} w-1/4`} onClick={handleLoadGame}>
                   Load game
                 </button>
             </div>

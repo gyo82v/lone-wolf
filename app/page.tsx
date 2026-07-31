@@ -36,6 +36,7 @@ export default function Home() {
   const [enemyHealth, setEnemyHealth] = useState(0)
   const [combatStrenght, setCombatStrenght] = useState(0)
   const [gameStarted, setGameStarted] = useState(false)
+  const [chapter, setChapter] = useState(0)
   const gameOver = gameStarted && health <= 0;
 
   const addHealth = (value:number) => setHealth(h => h + value)
@@ -130,7 +131,10 @@ const restartGame = () => {
 
   return (
     <main>
-      <h1 className="font-bold text-3xl text-center my-4 text-stone-600 underline">Lone Wolf</h1>
+      <h1 className="font-bold text-3xl text-center my-4 text-stone-600 underline">
+        Lone Wolf
+        {(chapter > 0) && <span className="ml-3">chapter:{chapter}</span>}
+      </h1>
       {gameOver ?
       <div className="flex flex-col mx-auto w-4/12 items-center gap-6 mt-20">
         <h2 className="text-6xl font-bold">Game over</h2>
@@ -151,6 +155,8 @@ const restartGame = () => {
           setHealth={setHealth}
           setStrenght={setStrenght}
           setGameStarted={setGameStarted}
+          setHero={setHero}
+          setChapter={setChapter}
         />
       }
 
