@@ -18,8 +18,6 @@ type Props = {
 export default function CombatSection({health, enemyHealth, combatStrenght, setHealth, setEnemyHealth, setShowGame, setShowCombat}:Props){
 
     const [text, setText] = useState({wolf: 0, enemy:0, randomNumber:0})
-    const [battleWon, setBattleWon] = useState(false)
-
 
     const handleCombat = () => {
       const result = combat(combatStrenght, health, enemyHealth)
@@ -29,15 +27,12 @@ export default function CombatSection({health, enemyHealth, combatStrenght, setH
       setText(t => ({...t, randomNumber: result.randomInt}))
       setHealth(result.lupoSolitarioHP)
       setEnemyHealth(result.enemyHP)
-      if(enemyHealth <= 0) setBattleWon(true)
-
       console.log("result: ", result)
     }
 
     const handleBattleWon = () => {
         setShowCombat(false)
         setShowGame(true)
-        setBattleWon(false)
         setText({wolf: 0, enemy:0, randomNumber:0})
     }
     return(
@@ -74,7 +69,7 @@ export default function CombatSection({health, enemyHealth, combatStrenght, setH
                         <p>Number: {text.randomNumber}</p>
                     </div>
                 </div>
-                {battleWon && 
+                {enemyHealth <= 0 && 
                     <div className="flex flex-col gap-3 items-center">
                         <p className="font-bold text-2xl">Battle won!</p>
                         <button className={`${baseButtonStyle} uppercase`}  onClick={handleBattleWon}>Continue</button>

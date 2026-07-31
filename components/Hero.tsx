@@ -56,7 +56,7 @@ export default function HeroSection({hero}:Props){
                 <div className="flex gap-4">
                     <div className="flex items-center gap-2">
                         <GiSwapBag className="text-yellow-700 h-6 w-6" />
-                        <p>{hero.borsa}</p>
+                        <p>{hero.borsa}<span className="font-extralight text-xs">(Max:50)</span></p>
                     </div>
                     <div className="flex items-center gap-2">
                         <GiMeal className="text-amber-800 h-6 w-6" />
@@ -66,7 +66,7 @@ export default function HeroSection({hero}:Props){
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2">
                         <FaShieldHalved className="text-gray-400 h-6 w-6" />
-                        <p className="font-semibold text-lg">Armamenti:</p>
+                        <p className="font-semibold text-lg">Armamenti<span className="font-extralight text-xs">(Max:2)</span>:</p>
                     </div>
                     {hero.armamento.length > 0 ?
                         <ul className="list-decimal ml-4">
@@ -78,7 +78,7 @@ export default function HeroSection({hero}:Props){
                 <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-2">
                         <GiBackpack className="text-amber-900 h-6 w-6" />
-                        <p className="font-semibold text-lg">Oggetti zaino</p>
+                        <p className="font-semibold text-lg">Oggetti zaino<span className="font-extralight text-xs">(Max:8, pasti included)</span></p>
                     </div>
                     {hero.zaino.oggetti.length > 0 ?
                         <ul className="list-decimal ml-4">
