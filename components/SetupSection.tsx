@@ -8,6 +8,8 @@ import { randomNumber } from "@/lib/randomNumberGenerator";
 import { Dispatch, SetStateAction } from "react";
 import { loadGame } from "@/firebase/loneWolf";
 import { weaponSelector } from "@/lib/weaponSelector";
+import { objectSelector } from "@/lib/objectSelector";
+import { useState } from "react";
 
 
 type Props = {
@@ -27,6 +29,8 @@ type Props = {
 };
 
 export default function SetupSection({hero, handleStats, addItemToArray, addItemToZaino, handlePasti, addBonus, setShowGame, setShowSetup, setHealth, setStrenght, setGameStarted, setHero, setChapter}:Props){
+
+    const [selectedObject, setSelectedObject] = useState("none")
 
     const handleResistenza = (formData: FormData) => {
       if(!handleStats) return
@@ -108,6 +112,11 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
     const handleAddPasti = () => {
       if(!handlePasti) return
       handlePasti(1)
+    }
+
+    const handleObjectSelection = () => {
+      const object = objectSelector()
+      setSelectedObject(object)
     }
 
     const handleStart = () => {
@@ -209,7 +218,14 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
                     </select>
                     <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
                   </form>
+                  <SmallDivider />
+                  <div className="flex flex-col gap-3">
+                    <h3 className="font-bold">Select random object:</h3>
+                    <button onClick={handleObjectSelection} className={`${baseButtonStyle} w-1/2 uppercase`}>select</button>
+                    <p className="font-extralight italic">the selected object is: {selectedObject} </p>
+                  </div>
                 </div>
+
                 <div className="border-2 border-stone-500 rounded-lg p-4 w-full">
                     <h3 className="font-bold text-xl mb-6">Lone Wolf</h3>
                     <div className="flex flex-col gap-3">
