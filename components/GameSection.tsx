@@ -7,6 +7,7 @@ import BonusSection from "./ui/BonusSection";
 import {FaHeart} from "react-icons/fa6";
 import {GiCrossedSwords} from "react-icons/gi";
 import HeroSection from "./Hero";
+import { saveGame } from "@/firebase/loneWolf";
 
 type HeroStringArrayKey =
   | "armamento"
@@ -172,6 +173,14 @@ export default function GameSection({
     setShowCombat(true)
   }
 
+  const handleSave = async (formData:FormData) => {
+    const chapter = formData.get("chapter")
+    const chapternumber = Number(chapter)
+    if(typeof chapternumber !== "number") return
+    const success = await saveGame(hero, chapternumber)
+    if(success) console.log("Game saved.")
+  }
+
 
     return(
       <div className="flex w-11/12 gap-10">
@@ -212,6 +221,11 @@ export default function GameSection({
                 <ActionSection title="Oggetti speciali" addAction={handleSpecial} removeAction={handleRemoveSpecial} />
                 <BonusSection addAction={handleBonus} removeAction={handleRemoveBonus}  />
               </div>
+              <form className="flex flex-col gap-4 mt-10" action={handleSave}>
+                <h2 className="font-bold text-xl underline">Save progress</h2>
+                <input type="number" className={`${inputBasestyle}`} name="chapter" />
+                <button type="submit" className={`${baseButtonStyle} uppercase`} >Save</button>
+              </form>
           </div>
       </div>
     )
