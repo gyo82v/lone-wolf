@@ -8,6 +8,8 @@ import {FaHeart} from "react-icons/fa6";
 import {GiCrossedSwords} from "react-icons/gi";
 import HeroSection from "./Hero";
 import { saveGame } from "@/firebase/loneWolf";
+import { useState } from "react";
+import { randomNumber } from "@/lib/randomNumberGenerator";
 
 type HeroStringArrayKey =
   | "armamento"
@@ -50,6 +52,7 @@ export default function GameSection({
   addHealth, removeHealth, addStrenght, removeStrenght, setShowGame, setShowCombat,
   setEnemyHealth, setCombatStrenght
 }:Props){
+  const [destinyNumber, setDestinyNumber] = useState<number | null>(null)
 
   const handleHealth = (formData:FormData) => {
     const health = formData.get("add")
@@ -159,6 +162,11 @@ export default function GameSection({
     removeBonus(name)
   }
 
+  const handleDestinyNumber = () => {
+    const destinyNumber = randomNumber()
+    setDestinyNumber(destinyNumber)
+  }
+
   const startCombat = (formData:FormData) => {
     const loneWolfStrenght = formData.get("strenght")
     const enemyHealth = formData.get("enemy-health")
@@ -188,8 +196,9 @@ export default function GameSection({
               <HeroSection hero={hero} />
           </div>
           <div className="w-full border-2 border-stone-500 rounded-lg p-6">
-              <div>
-                <h2 className="font-semibold text-lg mb-2">Current stats:</h2>
+              <div className="flex justify-between">
+                <div>
+                  <h2 className="font-semibold text-lg mb-2">Current stats:</h2>
                   <div className="flex gap-4">
                     <div className="flex items-center gap-2">
                       <FaHeart className="text-red-500 h-6 w-6" />
@@ -200,6 +209,12 @@ export default function GameSection({
                       {strenght}
                     </div>
                   </div>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <h2 className="font-semibold text-lg ">Destiny Table</h2>
+                  <button onClick={handleDestinyNumber} className={`${baseButtonStyle} uppercase `}>Try your luck</button>
+                  <p>destiny number: <span className="text-amber-700">{destinyNumber}</span></p>
+                </div>
               </div>
               <div className="my-4">
                 <h2 className="font-semibold text-lg mb-2">Combat</h2>
