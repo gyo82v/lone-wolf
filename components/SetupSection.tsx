@@ -7,6 +7,8 @@ import ListBonus from "@/components/ui/ListBonus";
 import { randomNumber } from "@/lib/randomNumberGenerator";
 import { Dispatch, SetStateAction } from "react";
 import { loadGame } from "@/firebase/loneWolf";
+import { weaponSelector } from "@/lib/weaponSelector";
+
 
 type Props = {
   hero: Hero
@@ -95,6 +97,11 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
       if(!addItemToArray) return
       const arte = formData.get("arte")
       if(typeof arte !== "string" || arte.trim() === "") return
+      if(arte === "Scherma"){
+        const weapon = weaponSelector()
+        addItemToArray(`Scherma:${weapon}`, "artiRamas");
+        return
+      }
       addItemToArray(arte, "artiRamas")
     }
 
