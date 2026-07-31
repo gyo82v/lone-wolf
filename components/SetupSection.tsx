@@ -120,6 +120,8 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
       }
       setHero(data.hero)
       setChapter(data.chapter)
+      setHealth(data.hero.resistenza)
+      setStrenght(data.hero.combattivita)
       setGameStarted(true)
       setShowGame(true)
       setShowSetup(false)
@@ -192,11 +194,11 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
                       <option value="Orientamento">Orientamento</option>
                       <option value="Psicoschermo">Psicoschermo</option>
                       <option value="Psicolaser">Psicolaser</option>
-                      <option value="Scherma">Scherma</option>
                       <option value="Sesto-senso">Sesto senso</option>
                       <option value="Caccia">Caccia</option>
                       <option value="Affinita-animale">Affinita animale</option>
                       <option value="Telecinesi">Telecinesi</option>
+                      <option value="Scherma">Scherma</option>
                     </select>
                     <button type="submit" className={`${baseButtonStyle} w-1/2 uppercase`}>Add</button>
                   </form>
