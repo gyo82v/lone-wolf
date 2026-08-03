@@ -13,11 +13,8 @@ import {
   GiCrossedSwords,
 } from "react-icons/gi";
 
-type Props = {
-    hero: Hero
-}
 
-export default function HeroSection({hero}:Props){
+export default function HeroSection({hero}:{hero: Hero}) {
     return(
         <section className={`p-6 mx-auto flex max-w-4xl gap-10`}>
             <div className={`shadow-xl bg-stone-200 p-4 rounded-lg w-full flex flex-col gap-8 `}>
