@@ -1,8 +1,4 @@
-type Props = {
-    array: string[],
-    title?: string
-}
-export default function List({title, array}:Props){
+export default function List({title, array}:{title?: string, array: string[]}){
     return(
         <div>
             <p className="font-bold">{title}:</p>
