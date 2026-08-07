@@ -1,10 +1,4 @@
-type Props = {
-    title?: string,
-    array: {name:string, value:number}[]
-}
-
-
-export default function ListBonus({title, array}:Props){
+export default function ListBonus({title, array}:{title?: string, array: {name:string, value:number}[]}) {
     return(
         <div>
             <p className="font-bold">{title}:</p>
