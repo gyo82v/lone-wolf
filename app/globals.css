@@ -20,31 +20,24 @@
     line-height: 1.5;
     font-weight: 400;
 
-    /* MOBILE-FIRST: visually hide scrollbars (keep scrolling functional) */
-    scrollbar-width: none;        /* Firefox */
-    -ms-overflow-style: none;     /* IE/Edge */
+
+    scrollbar-width: none;        
+    -ms-overflow-style: none;    
   }
 
-  /* WebKit browsers (Chrome, Safari) — hide on mobile by disabling the pseudo element */
+
   html::-webkit-scrollbar,
   body::-webkit-scrollbar {
     display: none;
   }
 
-  /* Keep defaults for images/buttons */
+
   img {
     @apply max-w-full h-auto;
   }
   button {
     @apply cursor-pointer;
   }
-}
-
-@layer utilities {
-
-}
-
-@layer components {
 }
 
 
