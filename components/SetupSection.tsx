@@ -145,7 +145,7 @@ export default function SetupSection({hero, handleStats, addItemToArray, addItem
 
     return(
         <section className="flex flex-col items-center">
-            <h2 className="mb-10 text-xl font-bold">Set up</h2>
+            <h2 className="mb-10 text-xl font-bold">game Set up</h2>
             <div className="flex gap-10 w-8/12">
                 <div className="flex flex-col gap-5 border-2 border-stone-500 rounded-lg p-8 w-full">
                   <form className="flex flex-col gap-3" action={handleResistenza}>
