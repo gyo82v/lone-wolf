@@ -132,7 +132,7 @@ const restartGame = () => {
   return (
     <main>
       <h1 className="font-bold text-3xl text-center my-4 text-stone-600 underline">
-        Lone Wolf
+        Lone Wolf Game
         {(chapter > 0) && <span className="ml-3">chapter:{chapter}</span>}
       </h1>
       {gameOver ?
