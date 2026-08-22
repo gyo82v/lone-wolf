@@ -137,7 +137,7 @@ const restartGame = () => {
       </h1>
       {gameOver ?
       <div className="flex flex-col mx-auto w-4/12 items-center gap-6 mt-20">
-        <h2 className="text-6xl font-bold">Game over; you are dead.</h2>
+        <h2 className="text-6xl font-bold">Game over!!!</h2>
         <button onClick={restartGame} className={`${baseButtonStyle} uppercase`}>Restart game</button>
       </div> :
       
