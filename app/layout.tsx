@@ -5,7 +5,7 @@ import "./globals.css";
 
 
 export const metadata: Metadata = {
-  title: "Lone wolf",
+  title: "Lone wolf game",
   description: "lone wolf app",
 };
 
