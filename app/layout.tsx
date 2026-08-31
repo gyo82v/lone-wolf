@@ -5,8 +5,8 @@ import "./globals.css";
 
 
 export const metadata: Metadata = {
-  title: "Lone wolf game",
-  description: "Lone wolf",
+  title: "Lone wolf",
+  description: "Lone wolf simulation",
 };
 
 export default function RootLayout({
