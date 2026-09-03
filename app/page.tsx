@@ -133,7 +133,7 @@ const restartGame = () => {
     <main>
       <h1 className="font-bold text-3xl text-center my-4 text-stone-600 underline">
         Lone Wolf
-        {(chapter > 0) && <span className="ml-3">chapter:{chapter}</span>}
+        {(chapter > 0) && <span className="ml-3">chapter number:{chapter}</span>}
       </h1>
       {gameOver ?
       <div className="flex flex-col mx-auto w-4/12 items-center gap-6 mt-20">
